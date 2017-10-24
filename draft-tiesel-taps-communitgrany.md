@@ -2,7 +2,7 @@
 title: Communication Units Granularity Considerations for Multi-Path Aware Transport Selection
 abbrev: Communication Units Granularity
 docname: draft-tiesel-taps-communitgrany-latest
-date: 2017-06-27
+date: 2017-10-24
 category: info
 
 ipr: trust200902
@@ -17,7 +17,7 @@ author:
  -
     ins: P. S. Tiesel
     name: Philipp S. Tiesel
-    organization: Berlin Institute of Technology
+    organization: TU Berlin
     street: Marchstr. 23
     city: Berlin
     country: Germany
@@ -25,19 +25,20 @@ author:
  -
     ins: T. Enghardt
     name: Theresa Enghardt
-    organization: Berlin Institute of Technology
+    organization: TU Berlin
     street: Marchstr. 23
     city: Berlin
     country: Germany
     email: theresa@inet.tu-berlin.de
 
 normative:
-  RFC2119:
 
 informative:
-  RFC7556:
-  End-To-End: DOI.10.1145/357401.357402
   RFC5555:
+  RFC7556:
+  RFC7864:
+  RFC7847:
+  End-To-End: DOI.10.1145/357401.357402
   I-D.gjessing-taps-minset:
   I-D.trammell-taps-post-sockets:
   I-D.pauly-taps-guidelines:
@@ -56,15 +57,6 @@ destination, path and transport protocol selection within the transport
 layer.
 
 --- middle
-
-Conventions and Definitions
-===========================
-
-The words "MUST", "MUST NOT", "SHALL", "SHALL NOT", "SHOULD", and
-"MAY" are used in this document. It's not shouting; when these
-words are capitalized, they have a special meaning as defined
-in {{RFC2119}}.
-
 
 
 Introduction        {#intro}
@@ -109,12 +101,11 @@ granularities.
 Communication Units vs. Layering
 --------------------------------
 When reasoning about network systems, layering traditionally has been the main guidance on where functionality is placed.
-Looking at modern systems, the classical concept of layers and their
-mapping to protocols becomes blurry.
+Looking at modern systems, the classical concept of layers and their mapping to protocols becomes blurry.
+Protocols can operate on different granularities of communication units, i.e., the semantic units such as messages that the protocols distinguish.
+These communication units often do not match the PDUs used by the protocols, e.g., TCP segments do not necessarily align with messages at the application layer.
 
-In this document, we do not want to take a protocol-centric
-perspective, but we focus on mechanisms a multi-access
-system is composed of and the communication units they operate on.
+In this document, we do not want to take a protocol-centric perspective, but we focus on mechanisms a multi-access system is composed of and the communication units they operate on.
 This has several advantages:
 
 - We can much easier abstract from the protocols used and look
@@ -150,9 +141,9 @@ Note the naming confusion concerning the term "flow" deriving from different per
 
 We also annotate the corresponding terminology used in {{I-D.trammell-taps-post-sockets}} if applicable.
 
-Object
+Message
 ------
-An Object is a piece of data that has a meaning for the application.
+An Message is a piece of data that has a meaning for the application.
 It is the smallest communication unit that we consider.
 
 {{I-D.gjessing-taps-minset}} correspondent: Message
@@ -167,7 +158,7 @@ Examples:
 
 Stream
 ------
-A Stream is an ordered sequence of related Objects that should be treated the same by the transport system.
+A Stream is an ordered sequence of related Messages that should be treated the same by the transport system.
 
 {{I-D.gjessing-taps-minset}} correspondent: Flow
 
@@ -182,7 +173,7 @@ Examples:
 Association, Flow
 -----------------
 
-An Association multiplexes a set of Objects or Streams within the same Flow
+An Association multiplexes a set of Messages or Streams within the same Flow
 with common source and destination. Therefore these communication units become
 indistinguishable for the network. 
 Association and flow describe the same concept, the former from the perspective
@@ -270,13 +261,13 @@ should be easy to execute.
 TODO: Discuss difference between Multiple Provisioning Domains
 {{RFC7556}} or multiple access networks within the same provisioning
 domain – especially when it comes to integrating 3GPP mechanisms like
-IFOM/ {{RFC5555}}.
+{{RFC5555}} or {{RFC7864}}.
 
 
 Chunking
 --------
-Chunking refers to splitting an object, a stream or a set of associations into one or more parts.
-Typically, chunking splits only large objects or streams into multiple
+Chunking refers to splitting an message, a stream or a set of associations into one or more parts.
+Typically, chunking splits only large messages or streams into multiple
 ones while keeping smaller entities untouched.
 Associations or Flows are typically not split, but sets
 of Associations or Flows might be partitioned.
@@ -289,7 +280,7 @@ Chunking can and does occur at different layers within a system:
   Thus, the files can be seen as the natural chunks of a Web site.
 - TCP takes as input a byte stream and chunks it into segments.
   TCP chunking (segmentation) occurs at arbitrary byte ranges,
-  thus it will most likely not align with boundaries of Objects that
+  thus it will most likely not align with boundaries of Messages that
   were multiplexed within an application layer Association on top of
   a TCP connection.
 
@@ -319,12 +310,6 @@ Examples of scheduling strategies include:
 - Schedule all chunks on one path as long as this path is available, otherwise fall pack to another.
 - Distribute chunks based on path capacity.
 
-
-
-Transport Protocol Stack Instance Selection
--------------------------------------------
-
-TODO – There are many examples in TAPS – still unsure what will go here or will be cited here.
 
 
 Cost of Transport Option Selection
@@ -367,10 +352,10 @@ tussles of moving functionality up or down the stack.
 This document does not argue against pushing some multi-path
 functionality down the stack, but advocates to maintain the control
 of the overall system composition at the end host.
+Functionality provided by a path can indeed be a reason to choose this path for a given communication unit.
 
-Especially in the 3GPP context, a lot of off-loading mechanisms have
-been specified that are implemented as path level components,
-within virtual network adapters.
+Some flow off-loading mechanisms that come in gestalt of of logical interfaces, e.g., {{RFC7847}}.
+These interfaces treat some association sets differently, which can be considered on-path functionality.
 
 
 Security Considerations {#sec}
@@ -384,6 +369,8 @@ transport option selection.
 Note:
 : This discussion is not exhaustive – more considerations will be added in later versions of this draft. 
 
+
+
 IANA Considerations {#iana}
 ===================
 
@@ -391,9 +378,22 @@ None
 
 
 
+Acknowledgements
+================
+
+This work has been supported by Leibniz Prize project funds of DFG - German Research Foundation: Gottfried Wilhelm Leibniz-Preis 2011 (FKZ FE 570/4-1).
 
 
 --- back
 
+Changes
+=======
 
+Since -00
+---------
 
+ - Replaced granularity "Object" with "Message" to align with other TAPS documents.
+ - Removed empty section on protocol instance selection - this topic will go into a separate document later.
+ - Minor clarifications.
+ - Removed definition of normative terms not needed for this document
+ - Added acknowledgments and updated authors' affiliation (compliance).
