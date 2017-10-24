@@ -4,8 +4,8 @@
 
 TAPS Working Group                                             P. Tiesel
 Internet-Draft                                               T. Enghardt
-Intended status: Informational            Berlin Institute of Technology
-Expires: December 29, 2017                                 June 27, 2017
+Intended status: Informational                                 TU Berlin
+Expires: April 27, 2018                                 October 24, 2017
 
 
   Communication Units Granularity Considerations for Multi-Path Aware
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 29, 2017.
+   This Internet-Draft will expire on April 27, 2018.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Tiesel & Enghardt       Expires December 29, 2017               [Page 1]
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 1]
 
-Internet-Draft       Communication Units Granularity           June 2017
+Internet-Draft       Communication Units Granularity        October 2017
 
 
    include Simplified BSD License text as described in Section 4.e of
@@ -64,36 +64,29 @@ Internet-Draft       Communication Units Granularity           June 2017
 
 Table of Contents
 
-   1.  Conventions and Definitions . . . . . . . . . . . . . . . . .   2
-   2.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-     2.1.  Communication Units vs. Layering  . . . . . . . . . . . .   3
-   3.  Abstract Hierarchy of Communication Units . . . . . . . . . .   4
-     3.1.  Object  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     3.2.  Stream  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     3.3.  Association, Flow . . . . . . . . . . . . . . . . . . . .   5
-     3.4.  Association Set, Flow Set (Flow-Group)  . . . . . . . . .   5
-   4.  Mechanisms Used in Multi-Path Systems . . . . . . . . . . . .   5
-     4.1.  Destination Selection . . . . . . . . . . . . . . . . . .   5
-     4.2.  Path Selection  . . . . . . . . . . . . . . . . . . . . .   6
-     4.3.  Chunking  . . . . . . . . . . . . . . . . . . . . . . . .   7
-     4.4.  Scheduling  . . . . . . . . . . . . . . . . . . . . . . .   7
-     4.5.  Transport Protocol Stack Instance Selection . . . . . . .   8
-   5.  Cost of Transport Option Selection  . . . . . . . . . . . . .   8
-   6.  Involvement of On-Path Elements . . . . . . . . . . . . . . .   8
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Communication Units vs. Layering  . . . . . . . . . . . .   3
+   2.  Abstract Hierarchy of Communication Units . . . . . . . . . .   4
+     2.1.  Message . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     2.2.  Stream  . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     2.3.  Association, Flow . . . . . . . . . . . . . . . . . . . .   5
+     2.4.  Association Set, Flow Set (Flow-Group)  . . . . . . . . .   5
+   3.  Mechanisms Used in Multi-Path Systems . . . . . . . . . . . .   5
+     3.1.  Destination Selection . . . . . . . . . . . . . . . . . .   5
+     3.2.  Path Selection  . . . . . . . . . . . . . . . . . . . . .   6
+     3.3.  Chunking  . . . . . . . . . . . . . . . . . . . . . . . .   7
+     3.4.  Scheduling  . . . . . . . . . . . . . . . . . . . . . . .   7
+   4.  Cost of Transport Option Selection  . . . . . . . . . . . . .   8
+   5.  Involvement of On-Path Elements . . . . . . . . . . . . . . .   8
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   9.  Informative References  . . . . . . . . . . . . . . . . . . .   9
+   Appendix A.  Changes  . . . . . . . . . . . . . . . . . . . . . .  10
+     A.1.  Since -00 . . . . . . . . . . . . . . . . . . . . . . . .  10
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
-1.  Conventions and Definitions
-
-   The words "MUST", "MUST NOT", "SHALL", "SHALL NOT", "SHOULD", and
-   "MAY" are used in this document.  It's not shouting; when these words
-   are capitalized, they have a special meaning as defined in [RFC2119].
-
-2.  Introduction
+1.  Introduction
 
    Today's Internet architecture faces a communication endpoint with a
    set of choices, including choosing a transport protocol and picking
@@ -107,19 +100,19 @@ Table of Contents
 
    o  Which path(s) between the endpoints could be used?
 
-
-
-Tiesel & Enghardt       Expires December 29, 2017               [Page 2]
-
-Internet-Draft       Communication Units Granularity           June 2017
-
-
    o  Which path(s) between the endpoints should be used?
 
    o  Should the paths be used in an active/active way or only as
       active/fallback?
 
    o  Which protocols or sets of protocols should be used?
+
+
+
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 2]
+
+Internet-Draft       Communication Units Granularity        October 2017
+
 
    o  Which role will other on-path elements, e.g. middle-boxes, take in
       servicing this flow?
@@ -140,12 +133,17 @@ Internet-Draft       Communication Units Granularity           June 2017
    compare them even if they operate on different communication unit
    granularities.
 
-2.1.  Communication Units vs. Layering
+1.1.  Communication Units vs. Layering
 
    When reasoning about network systems, layering traditionally has been
    the main guidance on where functionality is placed.  Looking at
    modern systems, the classical concept of layers and their mapping to
-   protocols becomes blurry.
+   protocols becomes blurry.  Protocols can operate on different
+   granularities of communication units, i.e., the semantic units such
+   as messages that the protocols distinguish.  These communication
+   units often do not match the PDUs used by the protocols, e.g., TCP
+   segments do not necessarily align with messages at the application
+   layer.
 
    In this document, we do not want to take a protocol-centric
    perspective, but we focus on mechanisms a multi-access system is
@@ -165,9 +163,11 @@ Internet-Draft       Communication Units Granularity           June 2017
 
 
 
-Tiesel & Enghardt       Expires December 29, 2017               [Page 3]
+
+
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 3]
 
-Internet-Draft       Communication Units Granularity           June 2017
+Internet-Draft       Communication Units Granularity        October 2017
 
 
    Overall, this perspective allows us to compare mechanism like
@@ -176,7 +176,7 @@ Internet-Draft       Communication Units Granularity           June 2017
    in the BANANA working group) despite their different nature and layer
    of implementation.
 
-3.  Abstract Hierarchy of Communication Units
+2.  Abstract Hierarchy of Communication Units
 
    These communication units definitions are primarily used for
    reasoning about automatic stack composition.  Therefore, depending on
@@ -192,9 +192,9 @@ Internet-Draft       Communication Units Granularity           June 2017
    We also annotate the corresponding terminology used in
    [I-D.trammell-taps-post-sockets] if applicable.
 
-3.1.  Object
+2.1.  Message
 
-   An Object is a piece of data that has a meaning for the application.
+   An Message is a piece of data that has a meaning for the application.
    It is the smallest communication unit that we consider.
 
    [I-D.gjessing-taps-minset] correspondent: Message
@@ -207,9 +207,9 @@ Internet-Draft       Communication Units Granularity           June 2017
 
    o  An XML message in XMPP
 
-3.2.  Stream
+2.2.  Stream
 
-   A Stream is an ordered sequence of related Objects that should be
+   A Stream is an ordered sequence of related Messages that should be
    treated the same by the transport system.
 
    [I-D.gjessing-taps-minset] correspondent: Flow
@@ -221,18 +221,18 @@ Internet-Draft       Communication Units Granularity           June 2017
 
 
 
-Tiesel & Enghardt       Expires December 29, 2017               [Page 4]
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 4]
 
-Internet-Draft       Communication Units Granularity           June 2017
+Internet-Draft       Communication Units Granularity        October 2017
 
 
    o  A Stream in QUIC or SCTP
 
    o  A TCP connection used as transport for XMPP
 
-3.3.  Association, Flow
+2.3.  Association, Flow
 
-   An Association multiplexes a set of Objects or Streams within the
+   An Association multiplexes a set of Messages or Streams within the
    same Flow with common source and destination.  Therefore these
    communication units become indistinguishable for the network.
    Association and flow describe the same concept, the former from the
@@ -251,7 +251,7 @@ Internet-Draft       Communication Units Granularity           June 2017
       same 5-tuple of src-address, dst-address, protocol, src-port,
       dest-port.
 
-3.4.  Association Set, Flow Set (Flow-Group)
+2.4.  Association Set, Flow Set (Flow-Group)
 
    An Association Set or Flow Set is a set of Associations or Flows that
    belong together from an application point of view.
@@ -265,9 +265,9 @@ Internet-Draft       Communication Units Granularity           June 2017
    o  Two flows, one carrying RTP payloads and one used for RTCP control
       messages.
 
-4.  Mechanisms Used in Multi-Path Systems
+3.  Mechanisms Used in Multi-Path Systems
 
-4.1.  Destination Selection
+3.1.  Destination Selection
 
    Destination Selection refers to selecting one of multiple different
    destinations.  This mechanism is applicable to any kind of
@@ -277,9 +277,9 @@ Internet-Draft       Communication Units Granularity           June 2017
 
 
 
-Tiesel & Enghardt       Expires December 29, 2017               [Page 5]
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 5]
 
-Internet-Draft       Communication Units Granularity           June 2017
+Internet-Draft       Communication Units Granularity        October 2017
 
 
    o  Choosing one address of a multi-homed server for an upcoming
@@ -296,7 +296,7 @@ Internet-Draft       Communication Units Granularity           June 2017
    mechanism spreads across different administrative domains which each
    independently contribute to the overall selection result.
 
-4.2.  Path Selection
+3.2.  Path Selection
 
    Path Selection refers to choosing which of the available paths to
    use.  and can occur on the network layer and any layer below.
@@ -333,19 +333,19 @@ Internet-Draft       Communication Units Granularity           June 2017
 
 
 
-Tiesel & Enghardt       Expires December 29, 2017               [Page 6]
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 6]
 
-Internet-Draft       Communication Units Granularity           June 2017
+Internet-Draft       Communication Units Granularity        October 2017
 
 
    domain - especially when it comes to integrating 3GPP mechanisms like
-   IFOM/ [RFC5555].
+   [RFC5555] or [RFC7864].
 
-4.3.  Chunking
+3.3.  Chunking
 
-   Chunking refers to splitting an object, a stream or a set of
+   Chunking refers to splitting an message, a stream or a set of
    associations into one or more parts.  Typically, chunking splits only
-   large objects or streams into multiple ones while keeping smaller
+   large messages or streams into multiple ones while keeping smaller
    entities untouched.  Associations or Flows are typically not split,
    but sets of Associations or Flows might be partitioned.  Once split
    into chunks, each chunk can be transferred individually over
@@ -358,7 +358,7 @@ Internet-Draft       Communication Units Granularity           June 2017
 
    o  TCP takes as input a byte stream and chunks it into segments.  TCP
       chunking (segmentation) occurs at arbitrary byte ranges, thus it
-      will most likely not align with boundaries of Objects that were
+      will most likely not align with boundaries of Messages that were
       multiplexed within an application layer Association on top of a
       TCP connection.
 
@@ -373,7 +373,7 @@ Internet-Draft       Communication Units Granularity           June 2017
    o  Equal cost multipath routing does not distribute packets, but
       Flows to avoid reordering.
 
-4.4.  Scheduling
+3.4.  Scheduling
 
    Scheduling refers to distributing chunks or sets of chunks across
    multiple pre-chosen path.  Thus, depending on the objectives, it can
@@ -389,9 +389,9 @@ Internet-Draft       Communication Units Granularity           June 2017
 
 
 
-Tiesel & Enghardt       Expires December 29, 2017               [Page 7]
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 7]
 
-Internet-Draft       Communication Units Granularity           June 2017
+Internet-Draft       Communication Units Granularity        October 2017
 
 
    o  Schedule all chunks on one path as long as this path is available,
@@ -399,12 +399,7 @@ Internet-Draft       Communication Units Granularity           June 2017
 
    o  Distribute chunks based on path capacity.
 
-4.5.  Transport Protocol Stack Instance Selection
-
-   TODO - There are many examples in TAPS - still unsure what will go
-   here or will be cited here.
-
-5.  Cost of Transport Option Selection
+4.  Cost of Transport Option Selection
 
    Transport option selection mechanisms are often intertwined.  Which
    mechanism is used by which layer or which network component depends
@@ -426,7 +421,7 @@ Internet-Draft       Communication Units Granularity           June 2017
    requiring multiple DNS lookups for every 1 second chunk of a 20
    minute video.
 
-6.  Involvement of On-Path Elements
+5.  Involvement of On-Path Elements
 
    It may become necessary to take path layer components (middle-boxes)
    into account that interfere with the transport layer.
@@ -437,20 +432,25 @@ Internet-Draft       Communication Units Granularity           June 2017
    always tussles of moving functionality up or down the stack.  This
    document does not argue against pushing some multi-path functionality
    down the stack, but advocates to maintain the control of the overall
-   system composition at the end host.
+   system composition at the end host.  Functionality provided by a path
+   can indeed be a reason to choose this path for a given communication
+   unit.
 
-   Especially in the 3GPP context, a lot of off-loading mechanisms have
-   been specified that are implemented as path level components, within
-   virtual network adapters.
+   Some flow off-loading mechanisms that come in gestalt of of logical
+   interfaces, e.g., [RFC7847].  These interfaces treat some association
+   sets differently, which can be considered on-path functionality.
 
 
 
-Tiesel & Enghardt       Expires December 29, 2017               [Page 8]
+
+
+
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 8]
 
-Internet-Draft       Communication Units Granularity           June 2017
+Internet-Draft       Communication Units Granularity        October 2017
 
 
-7.  Security Considerations
+6.  Security Considerations
 
    Security related transport service request must take priority over
    performance, therefore, transport options or stack compositions that
@@ -460,20 +460,17 @@ Internet-Draft       Communication Units Granularity           June 2017
    Note:  This discussion is not exhaustive - more considerations will
       be added in later versions of this draft.
 
-8.  IANA Considerations
+7.  IANA Considerations
 
    None
 
-9.  References
+8.  Acknowledgements
 
-9.1.  Normative References
+   This work has been supported by Leibniz Prize project funds of DFG -
+   German Research Foundation: Gottfried Wilhelm Leibniz-Preis 2011 (FKZ
+   FE 570/4-1).
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <http://www.rfc-editor.org/info/rfc2119>.
-
-9.2.  Informative References
+9.  Informative References
 
    [End-To-End]
               Saltzer, J., Reed, D., and D. Clark, "End-to-end arguments
@@ -492,32 +489,57 @@ Internet-Draft       Communication Units Granularity           June 2017
               February 2017.
 
    [I-D.trammell-taps-post-sockets]
-              Trammell, B., Perkins, C., Pauly, T., and M. Kuehlewind,
-              "Post Sockets, An Abstract Programming Interface for the
-              Transport Layer", draft-trammell-taps-post-sockets-00
-              (work in progress), March 2017.
-
-
-
-
-
-Tiesel & Enghardt       Expires December 29, 2017               [Page 9]
-
-Internet-Draft       Communication Units Granularity           June 2017
-
+              Trammell, B., Perkins, C., Pauly, T., Kuehlewind, M., and
+              C. Wood, "Post Sockets, An Abstract Programming Interface
+              for the Transport Layer", draft-trammell-taps-post-
+              sockets-01 (work in progress), September 2017.
 
    [RFC5555]  Soliman, H., Ed., "Mobile IPv6 Support for Dual Stack
               Hosts and Routers", RFC 5555, DOI 10.17487/RFC5555, June
-              2009, <http://www.rfc-editor.org/info/rfc5555>.
+              2009, <https://www.rfc-editor.org/info/rfc5555>.
+
+
+
+
+Tiesel & Enghardt        Expires April 27, 2018                 [Page 9]
+
+Internet-Draft       Communication Units Granularity        October 2017
+
 
    [RFC7556]  Anipko, D., Ed., "Multiple Provisioning Domain
               Architecture", RFC 7556, DOI 10.17487/RFC7556, June 2015,
-              <http://www.rfc-editor.org/info/rfc7556>.
+              <https://www.rfc-editor.org/info/rfc7556>.
+
+   [RFC7847]  Melia, T., Ed. and S. Gundavelli, Ed., "Logical-Interface
+              Support for IP Hosts with Multi-Access Support", RFC 7847,
+              DOI 10.17487/RFC7847, May 2016, <https://www.rfc-
+              editor.org/info/rfc7847>.
+
+   [RFC7864]  Bernardos, CJ., Ed., "Proxy Mobile IPv6 Extensions to
+              Support Flow Mobility", RFC 7864, DOI 10.17487/RFC7864,
+              May 2016, <https://www.rfc-editor.org/info/rfc7864>.
+
+Appendix A.  Changes
+
+A.1.  Since -00
+
+   o  Replaced granularity "Object" with "Message" to align with other
+      TAPS documents.
+
+   o  Removed empty section on protocol instance selection - this topic
+      will go into a separate document later.
+
+   o  Minor clarifications.
+
+   o  Removed definition of normative terms not needed for this document
+
+   o  Added acknowledgments and updated authors' affiliation
+      (compliance).
 
 Authors' Addresses
 
    Philipp S. Tiesel
-   Berlin Institute of Technology
+   TU Berlin
    Marchstr. 23
    Berlin
    Germany
@@ -526,7 +548,7 @@ Authors' Addresses
 
 
    Theresa Enghardt
-   Berlin Institute of Technology
+   TU Berlin
    Marchstr. 23
    Berlin
    Germany
@@ -535,26 +557,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Tiesel & Enghardt       Expires December 29, 2017              [Page 10]
+Tiesel & Enghardt        Expires April 27, 2018                [Page 10]

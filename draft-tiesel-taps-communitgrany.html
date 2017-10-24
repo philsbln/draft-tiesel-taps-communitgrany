@@ -277,27 +277,26 @@ address {
 
 
   <link href="#rfc.toc" rel="Contents"/>
-<link href="#rfc.section.1" rel="Chapter" title="1 Conventions and Definitions"/>
-<link href="#rfc.section.2" rel="Chapter" title="2 Introduction"/>
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Communication Units vs. Layering"/>
-<link href="#rfc.section.3" rel="Chapter" title="3 Abstract Hierarchy of Communication Units"/>
-<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Object"/>
-<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Stream"/>
-<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Association, Flow"/>
-<link href="#rfc.section.3.4" rel="Chapter" title="3.4 Association Set, Flow Set (Flow-Group)"/>
-<link href="#rfc.section.4" rel="Chapter" title="4 Mechanisms Used in Multi-Path Systems"/>
-<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Destination Selection"/>
-<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Path Selection"/>
-<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Chunking"/>
-<link href="#rfc.section.4.4" rel="Chapter" title="4.4 Scheduling"/>
-<link href="#rfc.section.4.5" rel="Chapter" title="4.5 Transport Protocol Stack Instance Selection"/>
-<link href="#rfc.section.5" rel="Chapter" title="5 Cost of Transport Option Selection"/>
-<link href="#rfc.section.6" rel="Chapter" title="6 Involvement of On-Path Elements"/>
-<link href="#rfc.section.7" rel="Chapter" title="7 Security Considerations"/>
-<link href="#rfc.section.8" rel="Chapter" title="8 IANA Considerations"/>
-<link href="#rfc.references" rel="Chapter" title="9 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="9.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="9.2 Informative References"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.1.1" rel="Chapter" title="1.1 Communication Units vs. Layering"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Abstract Hierarchy of Communication Units"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Message"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Stream"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Association, Flow"/>
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 Association Set, Flow Set (Flow-Group)"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Mechanisms Used in Multi-Path Systems"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Destination Selection"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Path Selection"/>
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Chunking"/>
+<link href="#rfc.section.3.4" rel="Chapter" title="3.4 Scheduling"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Cost of Transport Option Selection"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Involvement of On-Path Elements"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="9 Informative References"/>
+<link href="#rfc.appendix.A" rel="Chapter" title="A Changes"/>
+<link href="#rfc.appendix.A.1" rel="Chapter" title="A.1 Since -00"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -306,7 +305,7 @@ address {
 
   <meta name="dct.creator" content="Tiesel, P. and T. Enghardt" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-tiesel-taps-communitgrany-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-6-27" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-10-24" />
   <meta name="dct.abstract" content="This document provides an abstract framework to reason about the composition of multi-path aware systems in a protocol-independent fashion.  It discusses basic mechanisms that are used in multi-path systems and their applicability to different granularities of communication units.  This document is targeted as consideration basis for automation of destination, path and transport protocol selection within the transport layer." />
   <meta name="description" content="This document provides an abstract framework to reason about the composition of multi-path aware systems in a protocol-independent fashion.  It discusses basic mechanisms that are used in multi-path systems and their applicability to different granularities of communication units.  This document is targeted as consideration basis for automation of destination, path and transport protocol selection within the transport layer." />
 
@@ -327,11 +326,11 @@ address {
 </tr>
 <tr>
   <td class="left">Intended status: Informational</td>
-  <td class="right">Berlin Institute of Technology</td>
+  <td class="right">TU Berlin</td>
 </tr>
 <tr>
-  <td class="left">Expires: December 29, 2017</td>
-  <td class="right">June 27, 2017</td>
+  <td class="left">Expires: April 27, 2018</td>
+  <td class="right">October 24, 2017</td>
 </tr>
 
     	
@@ -351,7 +350,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on December 29, 2017.</p>
+<p>This Internet-Draft will expire on April 27, 2018.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -363,37 +362,34 @@ address {
   <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
   <ul class="toc">
 
-  	<li>1.   <a href="#rfc.section.1">Conventions and Definitions</a></li>
-<li>2.   <a href="#rfc.section.2">Introduction</a></li>
-<ul><li>2.1.   <a href="#rfc.section.2.1">Communication Units vs. Layering</a></li>
-</ul><li>3.   <a href="#rfc.section.3">Abstract Hierarchy of Communication Units</a></li>
-<ul><li>3.1.   <a href="#rfc.section.3.1">Object</a></li>
-<li>3.2.   <a href="#rfc.section.3.2">Stream</a></li>
-<li>3.3.   <a href="#rfc.section.3.3">Association, Flow</a></li>
-<li>3.4.   <a href="#rfc.section.3.4">Association Set, Flow Set (Flow-Group)</a></li>
-</ul><li>4.   <a href="#rfc.section.4">Mechanisms Used in Multi-Path Systems</a></li>
-<ul><li>4.1.   <a href="#rfc.section.4.1">Destination Selection</a></li>
-<li>4.2.   <a href="#rfc.section.4.2">Path Selection</a></li>
-<li>4.3.   <a href="#rfc.section.4.3">Chunking</a></li>
-<li>4.4.   <a href="#rfc.section.4.4">Scheduling</a></li>
-<li>4.5.   <a href="#rfc.section.4.5">Transport Protocol Stack Instance Selection</a></li>
-</ul><li>5.   <a href="#rfc.section.5">Cost of Transport Option Selection</a></li>
-<li>6.   <a href="#rfc.section.6">Involvement of On-Path Elements</a></li>
-<li>7.   <a href="#rfc.section.7">Security Considerations</a></li>
-<li>8.   <a href="#rfc.section.8">IANA Considerations</a></li>
-<li>9.   <a href="#rfc.references">References</a></li>
-<ul><li>9.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>9.2.   <a href="#rfc.references.2">Informative References</a></li>
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">Communication Units vs. Layering</a></li>
+</ul><li>2.   <a href="#rfc.section.2">Abstract Hierarchy of Communication Units</a></li>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Message</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Stream</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">Association, Flow</a></li>
+<li>2.4.   <a href="#rfc.section.2.4">Association Set, Flow Set (Flow-Group)</a></li>
+</ul><li>3.   <a href="#rfc.section.3">Mechanisms Used in Multi-Path Systems</a></li>
+<ul><li>3.1.   <a href="#rfc.section.3.1">Destination Selection</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Path Selection</a></li>
+<li>3.3.   <a href="#rfc.section.3.3">Chunking</a></li>
+<li>3.4.   <a href="#rfc.section.3.4">Scheduling</a></li>
+</ul><li>4.   <a href="#rfc.section.4">Cost of Transport Option Selection</a></li>
+<li>5.   <a href="#rfc.section.5">Involvement of On-Path Elements</a></li>
+<li>6.   <a href="#rfc.section.6">Security Considerations</a></li>
+<li>7.   <a href="#rfc.section.7">IANA Considerations</a></li>
+<li>8.   <a href="#rfc.section.8">Acknowledgements</a></li>
+<li>9.   <a href="#rfc.references">Informative References</a></li>
+<li>Appendix A.   <a href="#rfc.appendix.A">Changes</a></li>
+<ul><li>A.1.   <a href="#rfc.appendix.A.1">Since -00</a></li>
 </ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
   </ul>
 
-  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#conventions-and-definitions" id="conventions-and-definitions">Conventions and Definitions</a></h1>
-<p id="rfc.section.1.p.1">The words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, and &#8220;MAY&#8221; are used in this document. It&#8217;s not shouting; when these words are capitalized, they have a special meaning as defined in <a href="#RFC2119">[RFC2119]</a>.</p>
-<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#intro" id="intro">Introduction</a></h1>
-<p id="rfc.section.2.p.1">Today&#8217;s Internet architecture faces a communication endpoint with a set of choices, including choosing a transport protocol and picking an IP protocol version.  In many cases, e.g., when fetching data from a CDN, an endpoint has also the choice of which endpoint instance, <a href="#I-D.pauly-taps-guidelines">[I-D.pauly-taps-guidelines]</a> calls these instances <samp>Derived Endpoint</samp>, to contact as DNS can return multiple alternative addresses.</p>
-<p id="rfc.section.2.p.2">If endpoints want to take advantage of multiple available paths, there is another bunch of, partially interdependent, choices:</p>
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
+<p id="rfc.section.1.p.1">Today&#8217;s Internet architecture faces a communication endpoint with a set of choices, including choosing a transport protocol and picking an IP protocol version.  In many cases, e.g., when fetching data from a CDN, an endpoint has also the choice of which endpoint instance, <a href="#I-D.pauly-taps-guidelines">[I-D.pauly-taps-guidelines]</a> calls these instances <samp>Derived Endpoint</samp>, to contact as DNS can return multiple alternative addresses.</p>
+<p id="rfc.section.1.p.2">If endpoints want to take advantage of multiple available paths, there is another bunch of, partially interdependent, choices:</p>
 <p/>
 
 <ul>
@@ -403,11 +399,11 @@ address {
   <li>Which protocols or sets of protocols should be used?</li>
   <li>Which role will other on-path elements, e.g. middle-boxes, take in servicing this flow?</li>
 </ul>
-<p id="rfc.section.2.p.4">Implementing an heuristic or strategy for choosing from this overwhelming set of transport options by each application puts a huge burden on the application developer.  Thus, the decisions regarding all transport options mentioned so far should be supported and, if requested by the application, automated within a the transport layer.  In order to build such automatization, we need to be able to compare the product of all transport options (destinations, paths, transport protocols and protocol options) available to choose the most appropriate.</p>
-<p id="rfc.section.2.p.5">As the protocols to be used are not known a priori and can differ depending on other transport options, this reasoning has to be independent of a specific protocol or implementation and allow to compare them even if they operate on different communication unit granularities.</p>
-<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#communication-units-vs-layering" id="communication-units-vs-layering">Communication Units vs. Layering</a></h1>
-<p id="rfc.section.2.1.p.1">When reasoning about network systems, layering traditionally has been the main guidance on where functionality is placed.  Looking at modern systems, the classical concept of layers and their mapping to protocols becomes blurry.</p>
-<p id="rfc.section.2.1.p.2">In this document, we do not want to take a protocol-centric perspective, but we focus on mechanisms a multi-access system is composed of and the communication units they operate on.  This has several advantages:</p>
+<p id="rfc.section.1.p.4">Implementing an heuristic or strategy for choosing from this overwhelming set of transport options by each application puts a huge burden on the application developer.  Thus, the decisions regarding all transport options mentioned so far should be supported and, if requested by the application, automated within a the transport layer.  In order to build such automatization, we need to be able to compare the product of all transport options (destinations, paths, transport protocols and protocol options) available to choose the most appropriate.</p>
+<p id="rfc.section.1.p.5">As the protocols to be used are not known a priori and can differ depending on other transport options, this reasoning has to be independent of a specific protocol or implementation and allow to compare them even if they operate on different communication unit granularities.</p>
+<h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#communication-units-vs-layering" id="communication-units-vs-layering">Communication Units vs. Layering</a></h1>
+<p id="rfc.section.1.1.p.1">When reasoning about network systems, layering traditionally has been the main guidance on where functionality is placed.  Looking at modern systems, the classical concept of layers and their mapping to protocols becomes blurry.  Protocols can operate on different granularities of communication units, i.e., the semantic units such as messages that the protocols distinguish.  These communication units often do not match the PDUs used by the protocols, e.g., TCP segments do not necessarily align with messages at the application layer.</p>
+<p id="rfc.section.1.1.p.2">In this document, we do not want to take a protocol-centric perspective, but we focus on mechanisms a multi-access system is composed of and the communication units they operate on.  This has several advantages:</p>
 <p/>
 
 <ul>
@@ -415,58 +411,58 @@ address {
   <li>By disseminate on which kind of communication unit these mechanisms can operate, we can reason about the overall design space.</li>
   <li>If seeing the same mechanism multiple times within the same system composition, we can reason about possibly conflicting optimizations.</li>
 </ul>
-<p id="rfc.section.2.1.p.4">Overall, this perspective allows us to compare mechanism like distributing requests of an application among different paths, MPTCP and using bandwidth aggregation proxies (as discussed within the IETF in the BANANA working group) despite their different nature and layer of implementation.</p>
-<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#unit-h" id="unit-h">Abstract Hierarchy of Communication Units</a></h1>
-<p id="rfc.section.3.p.1">These communication units definitions are primarily used for reasoning about automatic stack composition. Therefore, depending on the protocol stack instance, a communication unit can span multiple protocol instances.</p>
-<p id="rfc.section.3.p.2">Some of these hierarchy levels correspond to objects in <a href="#I-D.gjessing-taps-minset">[I-D.gjessing-taps-minset]</a>, but in case of Association and Association Set, we have to split categories as they may indeed be separate on the transport.  Note the naming confusion concerning the term &#8220;flow&#8221; deriving from different perspective.</p>
-<p id="rfc.section.3.p.3">We also annotate the corresponding terminology used in <a href="#I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</a> if applicable.</p>
-<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#object" id="object">Object</a></h1>
-<p id="rfc.section.3.1.p.1">An Object is a piece of data that has a meaning for the application.  It is the smallest communication unit that we consider.</p>
+<p id="rfc.section.1.1.p.4">Overall, this perspective allows us to compare mechanism like distributing requests of an application among different paths, MPTCP and using bandwidth aggregation proxies (as discussed within the IETF in the BANANA working group) despite their different nature and layer of implementation.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#unit-h" id="unit-h">Abstract Hierarchy of Communication Units</a></h1>
+<p id="rfc.section.2.p.1">These communication units definitions are primarily used for reasoning about automatic stack composition. Therefore, depending on the protocol stack instance, a communication unit can span multiple protocol instances.</p>
+<p id="rfc.section.2.p.2">Some of these hierarchy levels correspond to objects in <a href="#I-D.gjessing-taps-minset">[I-D.gjessing-taps-minset]</a>, but in case of Association and Association Set, we have to split categories as they may indeed be separate on the transport.  Note the naming confusion concerning the term &#8220;flow&#8221; deriving from different perspective.</p>
+<p id="rfc.section.2.p.3">We also annotate the corresponding terminology used in <a href="#I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</a> if applicable.</p>
+<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#message" id="message">Message</a></h1>
+<p id="rfc.section.2.1.p.1">An Message is a piece of data that has a meaning for the application.  It is the smallest communication unit that we consider.</p>
 <p><a href="#I-D.gjessing-taps-minset">[I-D.gjessing-taps-minset]</a> correspondent: Message</p>
 <p><a href="#I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</a> correspondent: Message</p>
-<p id="rfc.section.3.1.p.4">Examples:</p>
+<p id="rfc.section.2.1.p.4">Examples:</p>
 <p/>
 
 <ul>
   <li>A HTTP-Request/Response-Header/Body for HTTP/2</li>
   <li>An XML message in XMPP</li>
 </ul>
-<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#stream" id="stream">Stream</a></h1>
-<p id="rfc.section.3.2.p.1">A Stream is an ordered sequence of related Objects that should be treated the same by the transport system.</p>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#stream" id="stream">Stream</a></h1>
+<p id="rfc.section.2.2.p.1">A Stream is an ordered sequence of related Messages that should be treated the same by the transport system.</p>
 <p><a href="#I-D.gjessing-taps-minset">[I-D.gjessing-taps-minset]</a> correspondent: Flow</p>
 <p><a href="#I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</a> correspondent: Stream</p>
-<p id="rfc.section.3.2.p.4">Examples:</p>
+<p id="rfc.section.2.2.p.4">Examples:</p>
 <p/>
 
 <ul>
   <li>A Stream in QUIC or SCTP</li>
   <li>A TCP connection used as transport for XMPP</li>
 </ul>
-<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#association-flow" id="association-flow">Association, Flow</a></h1>
-<p id="rfc.section.3.3.p.1">An Association multiplexes a set of Objects or Streams within the same Flow with common source and destination. Therefore these communication units become indistinguishable for the network.  Association and flow describe the same concept, the former from the perspective of the application, the latter from the perspective of the network.</p>
+<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#association-flow" id="association-flow">Association, Flow</a></h1>
+<p id="rfc.section.2.3.p.1">An Association multiplexes a set of Messages or Streams within the same Flow with common source and destination. Therefore these communication units become indistinguishable for the network.  Association and flow describe the same concept, the former from the perspective of the application, the latter from the perspective of the network.</p>
 <p><a href="#I-D.gjessing-taps-minset">[I-D.gjessing-taps-minset]</a> correspondent: Flow-Group</p>
 <p><a href="#I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</a> correspondent: Association</p>
-<p id="rfc.section.3.3.p.4">Examples:</p>
+<p id="rfc.section.2.3.p.4">Examples:</p>
 <p/>
 
 <ul>
   <li>A TCP connection carrying HTTP/2 frames</li>
   <li>A set of IP packets that carry TCP or UDP segments and share the same 5-tuple of src-address, dst-address, protocol, src-port, dest-port.</li>
 </ul>
-<h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> <a href="#association-set-flow-set-flow-group" id="association-set-flow-set-flow-group">Association Set, Flow Set (Flow-Group)</a></h1>
-<p id="rfc.section.3.4.p.1">An Association Set or Flow Set is a set of Associations or Flows that belong together from an application point of view.</p>
+<h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#association-set-flow-set-flow-group" id="association-set-flow-set-flow-group">Association Set, Flow Set (Flow-Group)</a></h1>
+<p id="rfc.section.2.4.p.1">An Association Set or Flow Set is a set of Associations or Flows that belong together from an application point of view.</p>
 <p><a href="#I-D.gjessing-taps-minset">[I-D.gjessing-taps-minset]</a> correspondent: Flow-Group</p>
 <p><a href="#I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</a> correspondent: Association</p>
-<p id="rfc.section.3.4.p.4">Examples:</p>
+<p id="rfc.section.2.4.p.4">Examples:</p>
 <p/>
 
 <ul>
   <li>Two flows, one carrying RTP payloads and one used for RTCP control messages.</li>
 </ul>
-<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#mechanisms-used-in-multi-path-systems" id="mechanisms-used-in-multi-path-systems">Mechanisms Used in Multi-Path Systems</a></h1>
-<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#destination-selection" id="destination-selection">Destination Selection</a></h1>
-<p id="rfc.section.4.1.p.1">Destination Selection refers to selecting one of multiple different destinations. This mechanism is applicable to any kind of communication unit and can occur on all layers.</p>
-<p id="rfc.section.4.1.p.2">Typical cases for destination selection include:</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#mechanisms-used-in-multi-path-systems" id="mechanisms-used-in-multi-path-systems">Mechanisms Used in Multi-Path Systems</a></h1>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#destination-selection" id="destination-selection">Destination Selection</a></h1>
+<p id="rfc.section.3.1.p.1">Destination Selection refers to selecting one of multiple different destinations. This mechanism is applicable to any kind of communication unit and can occur on all layers.</p>
+<p id="rfc.section.3.1.p.2">Typical cases for destination selection include:</p>
 <p/>
 
 <ul>
@@ -474,9 +470,9 @@ address {
   <li>Choosing a server among a list of servers retuned by DNS, e.g for servers that host the same content as part of a CDN.</li>
   <li>Choosing a backend server within a load balancer.</li>
 </ul>
-<p id="rfc.section.4.1.p.4">In practice, destination address selection is often tied to name resolution.  As name resolution relies on both local decisions on the endpoint as well as decisions within the DNS infrastructure, this mechanism spreads across different administrative domains which each independently contribute to the overall selection result.</p>
-<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#path-selection" id="path-selection">Path Selection</a></h1>
-<p id="rfc.section.4.2.p.1">Path Selection refers to choosing which of the available paths to use.  and can occur on the network layer and any layer below.</p>
+<p id="rfc.section.3.1.p.4">In practice, destination address selection is often tied to name resolution.  As name resolution relies on both local decisions on the endpoint as well as decisions within the DNS infrastructure, this mechanism spreads across different administrative domains which each independently contribute to the overall selection result.</p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#path-selection" id="path-selection">Path Selection</a></h1>
+<p id="rfc.section.3.2.p.1">Path Selection refers to choosing which of the available paths to use.  and can occur on the network layer and any layer below.</p>
 <p/>
 
 <ul>
@@ -485,66 +481,54 @@ address {
   <li>In case of an ECMP router, path selection is usually done based on a 3- or 5-tupel and just determines the interface to the next hop.</li>
   <li>Within MPTCP, each TCP segment has to be assigned to one or more subflows for transmission to the receiver.</li>
 </ul>
-<p id="rfc.section.4.2.p.3">While path selection involves a choice of access network it does not need knowledge of or changes to the routing choices within the core network.</p>
-<p id="rfc.section.4.2.p.4">When doing path selection on small communication units like TCP segments, it is not uncommon to split path selection into two subproblems: <em>Candidate Path Selection</em> determines feasible and preferred choices, e.g., in case of MPTCP by establishing subflows.  Afterwards, <em>Per-Chunk Path Selection</em> selects among these alternatives for each chunk. Thus, the first can be more expensive while the latter should be easy to execute.</p>
-<p id="rfc.section.4.2.p.5">TODO: Discuss difference between Multiple Provisioning Domains <a href="#RFC7556">[RFC7556]</a> or multiple access networks within the same provisioning domain &#8211; especially when it comes to integrating 3GPP mechanisms like IFOM/ <a href="#RFC5555">[RFC5555]</a>.</p>
-<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#chunking" id="chunking">Chunking</a></h1>
-<p id="rfc.section.4.3.p.1">Chunking refers to splitting an object, a stream or a set of associations into one or more parts.  Typically, chunking splits only large objects or streams into multiple ones while keeping smaller entities untouched.  Associations or Flows are typically not split, but sets of Associations or Flows might be partitioned.  Once split into chunks, each chunk can be transferred individually over different transfer options.</p>
-<p id="rfc.section.4.3.p.2">Chunking can and does occur at different layers within a system:</p>
+<p id="rfc.section.3.2.p.3">While path selection involves a choice of access network it does not need knowledge of or changes to the routing choices within the core network.</p>
+<p id="rfc.section.3.2.p.4">When doing path selection on small communication units like TCP segments, it is not uncommon to split path selection into two subproblems: <em>Candidate Path Selection</em> determines feasible and preferred choices, e.g., in case of MPTCP by establishing subflows.  Afterwards, <em>Per-Chunk Path Selection</em> selects among these alternatives for each chunk. Thus, the first can be more expensive while the latter should be easy to execute.</p>
+<p id="rfc.section.3.2.p.5">TODO: Discuss difference between Multiple Provisioning Domains <a href="#RFC7556">[RFC7556]</a> or multiple access networks within the same provisioning domain &#8211; especially when it comes to integrating 3GPP mechanisms like <a href="#RFC5555">[RFC5555]</a> or <a href="#RFC7864">[RFC7864]</a>.</p>
+<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#chunking" id="chunking">Chunking</a></h1>
+<p id="rfc.section.3.3.p.1">Chunking refers to splitting an message, a stream or a set of associations into one or more parts.  Typically, chunking splits only large messages or streams into multiple ones while keeping smaller entities untouched.  Associations or Flows are typically not split, but sets of Associations or Flows might be partitioned.  Once split into chunks, each chunk can be transferred individually over different transfer options.</p>
+<p id="rfc.section.3.3.p.2">Chunking can and does occur at different layers within a system:</p>
 <p/>
 
 <ul>
   <li>A Web site consists of multiple objects or files.  Thus, the files can be seen as the natural chunks of a Web site.</li>
-  <li>TCP takes as input a byte stream and chunks it into segments.  TCP chunking (segmentation) occurs at arbitrary byte ranges, thus it will most likely not align with boundaries of Objects that were multiplexed within an application layer Association on top of a TCP connection.</li>
+  <li>TCP takes as input a byte stream and chunks it into segments.  TCP chunking (segmentation) occurs at arbitrary byte ranges, thus it will most likely not align with boundaries of Messages that were multiplexed within an application layer Association on top of a TCP connection.</li>
 </ul>
-<p id="rfc.section.4.3.p.4">In practice, chunking is often constrained in order to maintain certain properties that are desirable for the overall system.  Examples such restrictions include the following:</p>
+<p id="rfc.section.3.3.p.4">In practice, chunking is often constrained in order to maintain certain properties that are desirable for the overall system.  Examples such restrictions include the following:</p>
 <p/>
 
 <ul>
   <li>Segmentation in TCP restrict the chunk size, i.e. TCP segment size, to the IP MTU  or IP Path MTU to avoid fragmentation at the IP layer.</li>
   <li>Equal cost multipath routing does not distribute packets, but Flows to avoid reordering.</li>
 </ul>
-<h1 id="rfc.section.4.4"><a href="#rfc.section.4.4">4.4.</a> <a href="#scheduling" id="scheduling">Scheduling</a></h1>
-<p id="rfc.section.4.4.p.1">Scheduling refers to distributing chunks or sets of chunks across multiple pre-chosen path. Thus, depending on the objectives, it can make sense to see scheduling as is nothing else than per-chunk path selection as defined above. In other cases, e.g. when trying to balance traffic, it makes sense to look at scheduling as a concept itself that uses chunking and per-chunk path selection as sub-mechanisms.</p>
-<p id="rfc.section.4.4.p.2">Examples of scheduling strategies include:</p>
+<h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> <a href="#scheduling" id="scheduling">Scheduling</a></h1>
+<p id="rfc.section.3.4.p.1">Scheduling refers to distributing chunks or sets of chunks across multiple pre-chosen path. Thus, depending on the objectives, it can make sense to see scheduling as is nothing else than per-chunk path selection as defined above. In other cases, e.g. when trying to balance traffic, it makes sense to look at scheduling as a concept itself that uses chunking and per-chunk path selection as sub-mechanisms.</p>
+<p id="rfc.section.3.4.p.2">Examples of scheduling strategies include:</p>
 <p/>
 
 <ul>
   <li>Schedule all chunks on one path as long as this path is available, otherwise fall pack to another.</li>
   <li>Distribute chunks based on path capacity.</li>
 </ul>
-<h1 id="rfc.section.4.5"><a href="#rfc.section.4.5">4.5.</a> <a href="#transport-protocol-stack-instance-selection" id="transport-protocol-stack-instance-selection">Transport Protocol Stack Instance Selection</a></h1>
-<p id="rfc.section.4.5.p.1">TODO &#8211; There are many examples in TAPS &#8211; still unsure what will go here or will be cited here.</p>
-<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#cost-of-transport-option-selection" id="cost-of-transport-option-selection">Cost of Transport Option Selection</a></h1>
-<p id="rfc.section.5.p.1">Transport option selection mechanisms are often intertwined.  Which mechanism is used by which layer or which network component depends on the transfer objectives as well as the state of the network, e.g., availability, path throughput, path RTT, server load.</p>
-<p id="rfc.section.5.p.2">The cost and complexity of transport option selection depends on the network state used and the number of transfer options.  If the transfer option selection only uses local state e.g., link availability, and the mechanism is predetermined and/or uses simple mechanisms, e.g., a simple hash function, the cost can even be negligible.  An example where transfer option selection is cheap is ECMP within a router.  In other cases, the cost can be non-trivial, e.g. when the selection involves queries to remote entities or even active network performance measurements.  Such examples include DNS or DHT lookups, as used by some file sharing protocols, or network measurements like RTT and bandwidth estimations used by many video streaming applications. Indeed, costs may be prohibitive, e.g when requiring multiple DNS lookups for every 1 second chunk of a 20 minute video.</p>
-<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#involvement-of-on-path-elements" id="involvement-of-on-path-elements">Involvement of On-Path Elements</a></h1>
-<p id="rfc.section.6.p.1">It may become necessary to take path layer components (middle-boxes) into account that interfere with the transport layer.</p>
-<p id="rfc.section.6.p.2">While the classical &#8220;End-To-End Arguments in System Design&#8221; <a href="#End-To-End">[End-To-End]</a> advocates for a dumb network and placing functionality as close to the edge and up in the stack as possible, there are always tussles of moving functionality up or down the stack.  This document does not argue against pushing some multi-path functionality down the stack, but advocates to maintain the control of the overall system composition at the end host.</p>
-<p id="rfc.section.6.p.3">Especially in the 3GPP context, a lot of off-loading mechanisms have been specified that are implemented as path level components, within virtual network adapters.</p>
-<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#sec" id="sec">Security Considerations</a></h1>
-<p id="rfc.section.7.p.1">Security related transport service request must take priority over performance, therefore, transport options or stack compositions that don&#8217;t provide the transport service requested should be ignored for transport option selection.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#cost-of-transport-option-selection" id="cost-of-transport-option-selection">Cost of Transport Option Selection</a></h1>
+<p id="rfc.section.4.p.1">Transport option selection mechanisms are often intertwined.  Which mechanism is used by which layer or which network component depends on the transfer objectives as well as the state of the network, e.g., availability, path throughput, path RTT, server load.</p>
+<p id="rfc.section.4.p.2">The cost and complexity of transport option selection depends on the network state used and the number of transfer options.  If the transfer option selection only uses local state e.g., link availability, and the mechanism is predetermined and/or uses simple mechanisms, e.g., a simple hash function, the cost can even be negligible.  An example where transfer option selection is cheap is ECMP within a router.  In other cases, the cost can be non-trivial, e.g. when the selection involves queries to remote entities or even active network performance measurements.  Such examples include DNS or DHT lookups, as used by some file sharing protocols, or network measurements like RTT and bandwidth estimations used by many video streaming applications. Indeed, costs may be prohibitive, e.g when requiring multiple DNS lookups for every 1 second chunk of a 20 minute video.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#involvement-of-on-path-elements" id="involvement-of-on-path-elements">Involvement of On-Path Elements</a></h1>
+<p id="rfc.section.5.p.1">It may become necessary to take path layer components (middle-boxes) into account that interfere with the transport layer.</p>
+<p id="rfc.section.5.p.2">While the classical &#8220;End-To-End Arguments in System Design&#8221; <a href="#End-To-End">[End-To-End]</a> advocates for a dumb network and placing functionality as close to the edge and up in the stack as possible, there are always tussles of moving functionality up or down the stack.  This document does not argue against pushing some multi-path functionality down the stack, but advocates to maintain the control of the overall system composition at the end host.  Functionality provided by a path can indeed be a reason to choose this path for a given communication unit.</p>
+<p id="rfc.section.5.p.3">Some flow off-loading mechanisms that come in gestalt of of logical interfaces, e.g., <a href="#RFC7847">[RFC7847]</a>.  These interfaces treat some association sets differently, which can be considered on-path functionality.</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#sec" id="sec">Security Considerations</a></h1>
+<p id="rfc.section.6.p.1">Security related transport service request must take priority over performance, therefore, transport options or stack compositions that don&#8217;t provide the transport service requested should be ignored for transport option selection.</p>
 <p/>
 
 <dl>
   <dt>Note:</dt>
   <dd style="margin-left: 8">This discussion is not exhaustive &#8211; more considerations will be added in later versions of this draft.</dd>
 </dl>
-<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
-<p id="rfc.section.8.p.1">None</p>
-<h1 id="rfc.references"><a href="#rfc.references">9.</a> References</h1>
-<h1 id="rfc.references.1"><a href="#rfc.references.1">9.1.</a> Normative References</h1>
-<table>
-  <tbody>
-    <tr>
-      <td class="reference">
-        <b id="RFC2119">[RFC2119]</b>
-      </td>
-      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
-    </tr>
-  </tbody>
-</table>
-<h1 id="rfc.references.2"><a href="#rfc.references.2">9.2.</a> Informative References</h1>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
+<p id="rfc.section.7.p.1">None</p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.8.p.1">This work has been supported by Leibniz Prize project funds of DFG - German Research Foundation: Gottfried Wilhelm Leibniz-Preis 2011 (FKZ FE 570/4-1).</p>
+<h1 id="rfc.references"><a href="#rfc.references">9.</a> Informative References</h1>
 <table>
   <tbody>
     <tr>
@@ -569,7 +553,7 @@ address {
       <td class="reference">
         <b id="I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</b>
       </td>
-      <td class="top"><a>Trammell, B.</a>, <a>Perkins, C.</a>, <a>Pauly, T.</a> and <a>M. Kuehlewind</a>, "<a href="http://tools.ietf.org/html/draft-trammell-taps-post-sockets-00">Post Sockets, An Abstract Programming Interface for the Transport Layer</a>", Internet-Draft draft-trammell-taps-post-sockets-00, March 2017.</td>
+      <td class="top"><a>Trammell, B.</a>, <a>Perkins, C.</a>, <a>Pauly, T.</a>, <a>Kuehlewind, M.</a> and <a>C. Wood</a>, "<a href="http://tools.ietf.org/html/draft-trammell-taps-post-sockets-01">Post Sockets, An Abstract Programming Interface for the Transport Layer</a>", Internet-Draft draft-trammell-taps-post-sockets-01, September 2017.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -583,8 +567,31 @@ address {
       </td>
       <td class="top"><a>Anipko, D.</a>, "<a href="http://tools.ietf.org/html/rfc7556">Multiple Provisioning Domain Architecture</a>", RFC 7556, DOI 10.17487/RFC7556, June 2015.</td>
     </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7847">[RFC7847]</b>
+      </td>
+      <td class="top"><a>Melia, T.</a> and <a>S. Gundavelli</a>, "<a href="http://tools.ietf.org/html/rfc7847">Logical-Interface Support for IP Hosts with Multi-Access Support</a>", RFC 7847, DOI 10.17487/RFC7847, May 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7864">[RFC7864]</b>
+      </td>
+      <td class="top"><a>Bernardos, CJ.</a>, "<a href="http://tools.ietf.org/html/rfc7864">Proxy Mobile IPv6 Extensions to Support Flow Mobility</a>", RFC 7864, DOI 10.17487/RFC7864, May 2016.</td>
+    </tr>
   </tbody>
 </table>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#changes" id="changes">Changes</a></h1>
+<h1 id="rfc.appendix.A.1"><a href="#rfc.appendix.A.1">A.1.</a> <a href="#since-00" id="since-00">Since -00</a></h1>
+<p/>
+
+<ul>
+  <li>Replaced granularity &#8220;Object&#8221; with &#8220;Message&#8221; to align with other TAPS documents.</li>
+  <li>Removed empty section on protocol instance selection - this topic will go into a separate document later.</li>
+  <li>Minor clarifications.</li>
+  <li>Removed definition of normative terms not needed for this document</li>
+  <li>Added acknowledgments and updated authors&#8217; affiliation (compliance).</li>
+</ul>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
@@ -596,7 +603,7 @@ address {
 		<span class="family-name">Tiesel</span>
 	  </span>
 	</span>
-	<span class="org vcardline">Berlin Institute of Technology</span>
+	<span class="org vcardline">TU Berlin</span>
 	<span class="adr">
 	  <span class="vcardline">Marchstr. 23</span>
 
@@ -618,7 +625,7 @@ address {
 		<span class="family-name">Enghardt</span>
 	  </span>
 	</span>
-	<span class="org vcardline">Berlin Institute of Technology</span>
+	<span class="org vcardline">TU Berlin</span>
 	<span class="adr">
 	  <span class="vcardline">Marchstr. 23</span>
 
