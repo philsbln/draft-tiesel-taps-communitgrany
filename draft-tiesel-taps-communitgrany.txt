@@ -5,7 +5,7 @@
 TAPS Working Group                                             P. Tiesel
 Internet-Draft                                               T. Enghardt
 Intended status: Informational                                 TU Berlin
-Expires: April 27, 2018                                 October 24, 2017
+Expires: April 29, 2018                                 October 26, 2017
 
 
   Communication Units Granularity Considerations for Multi-Path Aware
@@ -14,13 +14,14 @@ Expires: April 27, 2018                                 October 24, 2017
 
 Abstract
 
-   This document provides an abstract framework to reason about the
-   composition of multi-path aware systems in a protocol-independent
-   fashion.  It discusses basic mechanisms that are used in multi-path
-   systems and their applicability to different granularities of
-   communication units.  This document is targeted as consideration
-   basis for automation of destination, path and transport protocol
-   selection within the transport layer.
+   This document provides guidelines how to reason about the composition
+   of multi-path aware systems and how to compose the functionality
+   needed by stacking existing protocols.  It discusses fundamental
+   mechanisms that are used in multi-path systems and the consequences
+   of applying them to different granularities of communication units.
+   This document is targeted as consideration basis for automation of
+   destination selection, path selection, and transport protocol
+   selection.
 
 Status of This Memo
 
@@ -37,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 27, 2018.
+   This Internet-Draft will expire on April 29, 2018.
 
 Copyright Notice
 
@@ -49,15 +50,15 @@ Copyright Notice
    (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 1]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 1]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
 
+   to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
@@ -105,14 +106,15 @@ Table of Contents
    o  Should the paths be used in an active/active way or only as
       active/fallback?
 
-   o  Which protocols or sets of protocols should be used?
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 2]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 2]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
+
+   o  Which protocols or sets of protocols should be used?
 
    o  Which role will other on-path elements, e.g. middle-boxes, take in
       servicing this flow?
@@ -163,9 +165,7 @@ Internet-Draft       Communication Units Granularity        October 2017
 
 
 
-
-
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 3]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 3]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
@@ -221,7 +221,7 @@ Internet-Draft       Communication Units Granularity        October 2017
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 4]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 4]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
@@ -277,7 +277,7 @@ Internet-Draft       Communication Units Granularity        October 2017
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 5]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 5]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
@@ -333,7 +333,7 @@ Internet-Draft       Communication Units Granularity        October 2017
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 6]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 6]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
@@ -389,7 +389,7 @@ Internet-Draft       Communication Units Granularity        October 2017
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 7]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 7]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
@@ -445,7 +445,7 @@ Internet-Draft       Communication Units Granularity        October 2017
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 8]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 8]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
@@ -484,9 +484,9 @@ Internet-Draft       Communication Units Granularity        October 2017
               (work in progress), June 2017.
 
    [I-D.pauly-taps-guidelines]
-              Pauly, T., "Software Guidelines for Protocol Evolution",
-              draft-pauly-taps-guidelines-00 (work in progress),
-              February 2017.
+              Pauly, T., "Guidelines for Racing During Connection
+              Establishment", draft-pauly-taps-guidelines-01 (work in
+              progress), October 2017.
 
    [I-D.trammell-taps-post-sockets]
               Trammell, B., Perkins, C., Pauly, T., Kuehlewind, M., and
@@ -501,7 +501,7 @@ Internet-Draft       Communication Units Granularity        October 2017
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                 [Page 9]
+Tiesel & Enghardt        Expires April 29, 2018                 [Page 9]
 
 Internet-Draft       Communication Units Granularity        October 2017
 
@@ -557,4 +557,4 @@ Authors' Addresses
 
 
 
-Tiesel & Enghardt        Expires April 27, 2018                [Page 10]
+Tiesel & Enghardt        Expires April 29, 2018                [Page 10]
