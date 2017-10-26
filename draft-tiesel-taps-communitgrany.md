@@ -2,7 +2,7 @@
 title: Communication Units Granularity Considerations for Multi-Path Aware Transport Selection
 abbrev: Communication Units Granularity
 docname: draft-tiesel-taps-communitgrany-latest
-date: 2017-10-24
+date: 2017-10-26
 category: info
 
 ipr: trust200902
@@ -47,15 +47,10 @@ informative:
 
 --- abstract
 
-This document provides an abstract framework to reason about the
-composition of multi-path aware systems in a protocol-independent
-fashion. 
-It discusses basic mechanisms that are used in multi-path systems and
-their applicability to different granularities of communication units.
-This document is targeted as consideration basis for automation of
-destination, path and transport protocol selection within the transport
-layer.
-
+This document provides guidelines how to reason about the composition of multi-path aware systems and how to compose the functionality needed by stacking existing protocols. 
+It discusses fundamental mechanisms that are used in multi-path systems and the consequences of applying them to different granularities of communication units.
+This document is targeted as consideration basis for automation of destination selection, path selection, and transport protocol selection.
+ 
 --- middle
 
 
