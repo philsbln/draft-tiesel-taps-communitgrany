@@ -2,7 +2,7 @@
 title: Communication Units Granularity Considerations for Multi-Path Aware Transport Selection
 abbrev: Communication Units Granularity
 docname: draft-tiesel-taps-communitgrany-latest
-date: 2017-10-26
+date: 2018-04-26
 category: info
 
 ipr: trust200902
@@ -39,30 +39,30 @@ informative:
   RFC7864:
   RFC7847:
   End-To-End: DOI.10.1145/357401.357402
-  I-D.gjessing-taps-minset:
-  I-D.trammell-taps-post-sockets:
-  I-D.pauly-taps-guidelines:
+  I-D.ietf-taps-minset:
+  I-D.ietf-taps-arch:
+  I-D.ietf-taps-interface:
+  I-D.brunstrom-taps-impl:
+
 
 
 
 --- abstract
 
-This document provides guidelines how to reason about the composition of multi-path aware systems and how to compose the functionality needed by stacking existing protocols. 
-It discusses fundamental mechanisms that are used in multi-path systems and the consequences of applying them to different granularities of communication units.
-This document is targeted as consideration basis for automation of destination selection, path selection, and transport protocol selection.
- 
+This document provides an approach how to reason about the composition of multi-path aware transport stacks. It discusses how to compose the functionality needed by stacking existing internet protocols and the fundamental mechanisms that are used in multi-path systems and the consequences of applying them to different granularities of communication units, e.g, on a message or stream granularity.
+This document is targeted as guidance for automation of destination selection, path selection, and transport protocol selection.
+
 --- middle
 
 
-Introduction        {#intro}
-============
+# Introduction         {#intro}
 
 Today's Internet architecture faces a communication endpoint with a
-set of choices, including choosing a transport protocol and picking an 
-IP protocol version. 
+set of choices, including choosing a transport protocol and picking an
+IP protocol version.
 In many cases, e.g., when fetching data from a CDN, an endpoint
 has also the choice of which endpoint instance,
-{{I-D.pauly-taps-guidelines}} calls these instances ``Derived
+{{I-D.brunstrom-taps-impl}} calls these instances ``Derived
 Endpoint``, to contact as DNS can return multiple alternative addresses.
 
 If endpoints want to take advantage of multiple available paths,
@@ -78,8 +78,8 @@ there is another bunch of, partially interdependent, choices:
 Implementing an heuristic or strategy for choosing from this
 overwhelming set of transport options by each application puts a huge
 burden on the application developer.
-Thus, the decisions regarding all transport options mentioned so far 
-should be supported and, if requested by the application, automated 
+Thus, the decisions regarding all transport options mentioned so far
+should be supported and, if requested by the application, automated
 within a the transport layer.
 In order to build such automatization, we need to be able to compare
 the product of all transport options (destinations, paths, transport
@@ -93,8 +93,8 @@ compare them even if they operate on different communication unit
 granularities.
 
 
-Communication Units vs. Layering
---------------------------------
+## Communication Units vs. Layering
+
 When reasoning about network systems, layering traditionally has been the main guidance on where functionality is placed.
 Looking at modern systems, the classical concept of layers and their mapping to protocols becomes blurry.
 Protocols can operate on different granularities of communication units, i.e., the semantic units such as messages that the protocols distinguish.
@@ -112,52 +112,47 @@ This has several advantages:
   system composition, we can reason about possibly conflicting
   optimizations.
 
-Overall, this perspective allows us to compare mechanism like 
+Overall, this perspective allows us to compare mechanism like
 distributing requests of an application among different paths, MPTCP
-and using bandwidth aggregation proxies (as discussed within the IETF 
+and using bandwidth aggregation proxies (as discussed within the IETF
 in the BANANA working group) despite their different nature and layer
 of implementation.
 
 
 
-Abstract Hierarchy of Communication Units {#unit-h}
-=========================================
+# Abstract Hierarchy of Communication Units {#unit-h}
 
 These communication units definitions are primarily used for reasoning
-about automatic stack composition. Therefore, depending on the protocol 
-stack instance, a communication unit can span multiple protocol 
+about automatic stack composition. Therefore, depending on the protocol
+stack instance, a communication unit can span multiple protocol
 instances.
 
 Some of these hierarchy levels correspond to objects in
-{{I-D.gjessing-taps-minset}}, but in case of Association and Association
+{{I-D.ietf-taps-minset}}, but in case of Association and Association
 Set, we have to split categories as they may indeed be separate on the
 transport.
 Note the naming confusion concerning the term "flow" deriving from different perspective.
 
-We also annotate the corresponding terminology used in {{I-D.trammell-taps-post-sockets}} if applicable.
+We also annotate the corresponding terminology used in {{I-D.ietf-taps-arch}} if it differs from the one used in this document.
 
-Message
-------
+## Message
+
 An Message is a piece of data that has a meaning for the application.
 It is the smallest communication unit that we consider.
 
-{{I-D.gjessing-taps-minset}} correspondent: Message
-
-{{I-D.trammell-taps-post-sockets}} correspondent: Message
+{{I-D.ietf-taps-minset}} correspondent: Message
 
 Examples:
 
 - A HTTP-Request/Response-Header/Body for HTTP/2
-- An XML message in XMPP 
+- An XML message in XMPP
 
 
-Stream
-------
+## Stream
+
 A Stream is an ordered sequence of related Messages that should be treated the same by the transport system.
 
-{{I-D.gjessing-taps-minset}} correspondent: Flow
-
-{{I-D.trammell-taps-post-sockets}} correspondent: Stream
+{{I-D.ietf-taps-minset}} correspondent: Flow
 
 Examples:
 
@@ -165,34 +160,29 @@ Examples:
 - A TCP connection used as transport for XMPP
 
 
-Association, Flow
------------------
+## Association / Connection Group
 
 An Association multiplexes a set of Messages or Streams within the same Flow
 with common source and destination. Therefore these communication units become
-indistinguishable for the network. 
+indistinguishable for the network.
 Association and flow describe the same concept, the former from the perspective
 of the application, the latter from the perspective of the network.
 
-{{I-D.gjessing-taps-minset}} correspondent: Flow-Group
+{{I-D.ietf-taps-minset}} correspondent: Flow-Group
 
-{{I-D.trammell-taps-post-sockets}} correspondent: Association
-
+{{I-D.ietf-taps-arch}} correspondent: Connection Group
 Examples:
 
 - A TCP connection carrying HTTP/2 frames
 - A set of IP packets that carry TCP or UDP segments and share the same 5-tuple of src-address, dst-address, protocol, src-port, dest-port.
 
 
-Association Set, Flow Set (Flow-Group)
--------------------------
+## Association Set / Flow-Group
 
 An Association Set or Flow Set is a set of Associations or Flows that belong
 together from an application point of view.
 
-{{I-D.gjessing-taps-minset}} correspondent: Flow-Group
-
-{{I-D.trammell-taps-post-sockets}} correspondent: Association
+{{I-D.ietf-taps-minset}} correspondent: Flow-Group
 
 Examples:
 
@@ -200,12 +190,16 @@ Examples:
 
 
 
-Mechanisms Used in Multi-Path Systems
-=====================================
+# Mechanisms Used in Multi-Path Systems
+
+Transport protocols on the Internet provide a large variety of functionality.
+While the functionality of simple protocols like UDP is easy to describe (multiplexing streams of messages), describing the functionality of complex protocols such as QUIC, MPTCP or SCTP is manyfold as these protocols provide a set of commonly used functionality.
+Also, the same functionality can be provided at many places throughout the whole stack.
+In the following, we explore the set of functionality that can be provided by transport protocols.
 
 
-Destination Selection
----------------------
+## Destination Selection
+
 Destination Selection refers to selecting one of multiple
 different destinations. This mechanism is applicable to any kind
 of communication unit and can occur on all layers.
@@ -225,8 +219,8 @@ across different administrative domains which each independently
 contribute to the overall selection result.
 
 
-Path Selection
---------------
+## Path Selection
+
 Path Selection refers to choosing which of the available paths to use.
 and can occur on the network layer and any layer below.
 
@@ -259,8 +253,8 @@ domain – especially when it comes to integrating 3GPP mechanisms like
 {{RFC5555}} or {{RFC7864}}.
 
 
-Chunking
---------
+## Chunking
+
 Chunking refers to splitting an message, a stream or a set of associations into one or more parts.
 Typically, chunking splits only large messages or streams into multiple
 ones while keeping smaller entities untouched.
@@ -291,8 +285,8 @@ Examples such restrictions include the following:
   Flows to avoid reordering.
 
 
-Scheduling
-----------
+## Scheduling
+
 Scheduling refers to distributing chunks or sets of chunks across
 multiple pre-chosen path. Thus, depending on the objectives, it can
 make sense to see scheduling as is nothing else than per-chunk path
@@ -307,8 +301,8 @@ Examples of scheduling strategies include:
 
 
 
-Cost of Transport Option Selection
-==================================
+# Cost of Transport Option Selection
+
 
 Transport option selection mechanisms are often intertwined.
  Which mechanism is used by which layer or which network component
@@ -334,8 +328,8 @@ chunk of a 20 minute video.
 
 
 
-Involvement of On-Path Elements
-===============================
+# Involvement of On-Path Elements
+
 
 It may become necessary to take path layer components (middle-boxes)
 into account that interfere with the transport layer.
@@ -353,42 +347,77 @@ Some flow off-loading mechanisms that come in gestalt of of logical interfaces, 
 These interfaces treat some association sets differently, which can be considered on-path functionality.
 
 
-Security Considerations {#sec}
-=======================
+# Overview of Mechanisms provided by selected IETF Protocols
 
-Security related transport service request must take priority over
-performance, therefore, transport options or stack compositions that 
-don't provide the transport service requested should be ignored for 
-transport option selection.
+| Protocol    | Congestion Control | Ordering        | Reliability | Integrity P. | Confidentiality P. | Authenticity P. | Chunking      | Multiplexing         |
+| ----------- |:------------------:|:---------------:|:-----------:|:------------:|:------------------:|:---------------:|:-------------:|:--------------------:|
+| HTTP        | r                  | r               | r           |              |                    |                 | bytes         | requests             |
+| HTTPS       | r                  | r               | r           | r            | r                  | r               | bytes         | requests             |
+| XMPP        | r                  | r               | r           | (r)          | (r)                | (r)             |               | messages             |
+| SIP         |                    |                 | +           | (r)          | (r)                | (r)             |               | messages             |
+| DTLS        |                    |                 |             | +            | +                  | +               |               | services,name        |
+| TLS         |                    | r               | r           | +            | +                  | +               |               | services,name        |
+| RTP         | +(prf)             | +(prf)          |             |              |                    |                 | messages(prf) | messages             |
+| SRTP        | +(prf)             | +(prf)          |             | +            | +                  | r(sig)          | messages(prf) | messages             |
+| QUIC        | +                  | +               | +           | +            | +                  | +(tls)          | bytes         | connection-id,+(tls) |
+| UDP         |                    |                 |             |              |                    |                 |               | ports                |
+| DCCP        | +                  |                 |             |              |                    |                 |               | ports                |
+| TCP         | +                  | +               | +           |              |                    |                 | bytes         | ports                |
+| MPTCP       | +                  | +               | +           |              |                    |                 | bytes         | ports                |
+| SCTP        | +                  | +               | +           |              |                    |                 | bytes         | ports,streams        |
+| IPsec (ESP) |                    |                 |             | +            | +                  | r(ike)          |               | spi,next-header      |
+| IPsec (AH)  |                    |                 |             | +            |                    | r(ike)          |               | spi,next-header      |
+| IP          |                    | (+(fr))         |             |              |                    |                 | (fragments)   | address,next-header  |
+| NEMO/IFOM   |                    |                 |             |              | r                  | r               | assoc.        |                      |
 
-Note:
-: This discussion is not exhaustive – more considerations will be added in later versions of this draft. 
+Legend:
+
+r:
+: Protocol requires transport service.
+
++:
+: Protocol provides transport service.
+
+prf:
+: Realized by content specific profiles.
+
+tls:
+: Uses TLSv1.3 as sub-protocol; imports authenticity protection and multiplexing from TLS.
+
+ike:
+: Realized externally by external protocol IKE/IKEv2.
+
+sig:
+: Realized externally by external signaling protocol (e.g., SIP, XMPP, WebRTC).
+
+fr:
+:Only when fragmentation is used and only to re-assemble IP PUDs
 
 
+# Acknowledgements
 
-IANA Considerations {#iana}
-===================
-
-None
-
-
-
-Acknowledgements
-================
 
 This work has been supported by Leibniz Prize project funds of DFG - German Research Foundation: Gottfried Wilhelm Leibniz-Preis 2011 (FKZ FE 570/4-1).
 
 
 --- back
 
-Changes
-=======
+# Changes
 
-Since -00
----------
+
+## Since -00
+
 
  - Replaced granularity "Object" with "Message" to align with other TAPS documents.
  - Removed empty section on protocol instance selection - this topic will go into a separate document later.
  - Minor clarifications.
  - Removed definition of normative terms not needed for this document
  - Added acknowledgments and updated authors' affiliation (compliance).
+
+## Since -01
+
+ - Updated drafts references
+ - Added Overview of Mechanisms provided by selected IETF Protocols
+ - Minor clarifications
+ - Removed superfluous IANA and Security Considerations section
+
