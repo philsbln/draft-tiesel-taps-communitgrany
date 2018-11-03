@@ -2,7 +2,7 @@
 title: Communication Units Granularity Considerations for Multi-Path Aware Transport Selection
 abbrev: Communication Units Granularity
 docname: draft-tiesel-taps-communitgrany-latest
-date: 2018-04-26
+date: 2018-11-03
 category: info
 
 ipr: trust200902
@@ -171,6 +171,7 @@ of the application, the latter from the perspective of the network.
 {{I-D.ietf-taps-minset}} correspondent: Flow-Group
 
 {{I-D.ietf-taps-arch}} correspondent: Connection Group
+
 Examples:
 
 - A TCP connection carrying HTTP/2 frames
@@ -420,4 +421,8 @@ This work has been supported by Leibniz Prize project funds of DFG - German Rese
  - Added Overview of Mechanisms provided by selected IETF Protocols
  - Minor clarifications
  - Removed superfluous IANA and Security Considerations section
+
+## Since -02
+
+ - Prevent expirary (minor formatting fixes)
 
